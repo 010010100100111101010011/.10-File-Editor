@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>.10 Studio</title>
+  <style>
+    :root {
+      --bg: #1e1e2e;
+      --panel: #252538;
+      --accent: #89b4fa;
+      --text: #cdd6f4;
+      --green: #a6e3a1;
+      --yellow: #f9e2af;
+      --pink: #f5c2e7;
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      padding: clamp(10px, 3vw, 20px);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .app-container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      flex-grow: 1;
+    }
+
+    h1 { 
+      color: var(--accent); 
+      font-size: clamp(0.9rem, 2.5vw, 1.4rem);
+      text-align: center;
+      margin-bottom: 5px;
+      word-break: break-all;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(clamp(280px, 45vw, 500px), 1fr));
+      gap: 15px;
+      width: 100%;
+    }
+
+    .panel {
+      background: var(--panel);
+      padding: clamp(12px, 2vw, 18px);
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    h2 {
+      font-size: clamp(0.8rem, 2vw, 1rem);
+      color: var(--text);
+      word-break: break-all;
+    }
+
+    textarea, input[type="text"] {
+      width: 100%;
+      background: #11111b;
+      color: var(--green);
+      border: 1px solid #45475a;
+      border-radius: 8px;
+      padding: 12px;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: clamp(13px, 2vw, 15px);
+      outline: none;
+    }
+
+    textarea {
+      height: clamp(140px, 25vh, 220px);
+      resize: vertical;
+    }
+
+    textarea[readonly] {
+      background: #09090e;
+      color: var(--green);
+      cursor: not-allowed;
+      user-select: none;
+    }
+
+    .controls {
+      display: flex;
+      gap: 10px;
+      width: 100%;
+    }
+
+    button, label.btn {
+      background: var(--accent);
+      color: #11111b;
+      border: none;
+      padding: clamp(10px, 2vw, 12px) clamp(12px, 2.5vw, 18px);
+      border-radius: 8px;
+      font-weight: bold;
+      font-size: clamp(10px, 1.6vw, 12px);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      flex: 1;
+      transition: background 0.2s, opacity 0.2s;
+      word-break: break-all;
+    }
+
+    .run-btn {
+      background: var(--green);
+    }
+
+    button:active, label.btn:active {
+      opacity: 0.8;
+    }
+
+    input[type="file"] { 
+      display: none; 
+    }
+
+    label.field-label {
+      display: block;
+      color: var(--pink);
+      font-weight: bold;
+      font-size: clamp(0.75rem, 1.8vw, 0.9rem);
+      word-break: break-all;
+    }
+
+    small {
+      color: #a6adc8;
+      font-size: clamp(10px, 1.8vw, 12px);
+      word-break: break-all;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="app-container">
+    <h1>.10 01000010 01101001 01101110 01100001 01110010 01111001 01010011 01110100 01110101 01100100 01101001 01101111</h1>
+
+    <div class="controls">
+      <label class="btn" for="fileInput">📂 01001111 01110000 01100101 01101110 .10</label>
+      <input type="file" id="fileInput" accept=".10">
+      <button onclick="downloadFile()">💾 01000100 01101111 01110111 01101110 01101100 01101111 01100001 01100100 .10</button>
+    </div>
+
+    <div class="grid">
+      <div class="panel">
+        <h2>00110001. 01001001 01101110 01100000 01110101 01110100</h2>
+        <label class="field-label" for="inputSource">01010100 01111001 01110000 01100101:</label>
+        <input type="text" id="inputSource" placeholder="Type here..." oninput="encodeEverything()">
+        <small>
+          01010100 01110101 01111008 01110100 ➔ <code>(binary)</code><br>
+          00110000-00111001 ➔ <code>{binary}</code>
+        </small>
+      </div>
+
+      <div class="panel">
+        <h2>00110010. .10 01000101 01100100 01101001 01100100 01101111 01110010</h2>
+        <textarea id="binaryEditor" readonly placeholder="01000010 01101001 01101110 01100001 01110010 01111001..."></textarea>
+        <button class="run-btn" onclick="runBinary()">▶ 01010010 01110101 01101110</button>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h2>00110011. 01001111 01110101 01110000 01100101 01110100</h2>
+      <textarea id="output" readonly placeholder="01010010 01110101 01101110 .10..."></textarea>
+    </div>
+  </div>
+
+  <script>
+    function encodeEverything() {
+      const input = document.getElementById('inputSource').value;
+      let result = [];
+
+      for (let i = 0; i < input.length; i++) {
+        const char = input[i];
+
+        if (/[0-9]/.test(char)) {
+          let binNum = parseInt(char, 10).toString(2).padStart(8, '0');
+          result.push(`{${binNum}}`);
+        } else {
+          let binChar = char.charCodeAt(0).toString(2).padStart(8, '0');
+          result.push(`(${binChar})`);
+        }
+      }
+
+      document.getElementById('binaryEditor').value = result.join(' ');
+    }
+
+    function runBinary() {
+      const code = document.getElementById('binaryEditor').value;
+      const outputBox = document.getElementById('output');
+      
+      const regex = /(\(([01]+)\))|(\{([01]+)\})/g;
+      let match;
+      let hasMatches = false;
+
+      let decodedOutput = "01000100 01100101 01100011 01101111 01100100 01100101 01100100:\n";
+      let log = "\n--------------------\n01001100 01101111 01100111:\n";
+
+      while ((match = regex.exec(code)) !== null) {
+        hasMatches = true;
+
+        if (match[1]) {
+          const rawBin = match[2];
+          const char = String.fromCharCode(parseInt(rawBin, 2));
+          decodedOutput += char;
+          log += `(binary) (${rawBin}) -> "${char}"\n`;
+        } 
+        else if (match[3]) {
+          const rawBin = match[4];
+          const num = parseInt(rawBin, 2);
+          decodedOutput += num;
+          log += `{binary} {${rawBin}} -> ${num}\n`;
+        }
+      }
+
+      if (!hasMatches) {
+        outputBox.value = "00110000 .10 01100010 01101100 01101111 01100011 01101011 01110011.";
+      } else {
+        outputBox.value = decodedOutput + log;
+      }
+    }
+
+    // STRICT FILE OPENER FOR .10 EXTENSION
+    document.getElementById('fileInput').addEventListener('change', function(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      if (!file.name.endsWith('.10')) {
+        alert("00110000 .10");
+        this.value = '';
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        document.getElementById('binaryEditor').value = e.target.result;
+        runBinary();
+      };
+      reader.readAsText(file);
+    });
+
+    // STRICT FILE DOWNLOADER FOR .10 EXTENSION
+    function downloadFile() {
+      const content = document.getElementById('binaryEditor').value;
+      if (!content) {
+        alert("00110000 .10");
+        return;
+      }
+
+      let filename = "document.10";
+
+      const blob = new Blob([content], { type: 'application/x-10-binary;charset=utf-8' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.setAttribute('download', filename);
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(a.href);
+    }
+  </script>
+</body>
+</html>
